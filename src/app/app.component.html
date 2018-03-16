@@ -1,0 +1,16 @@
+<div class="ui">
+  <nav class="navbar app">Trello Clone</nav>
+  <nav class="navbar board">Add new card</nav>
+
+  <div class="lists">
+
+    <mp-column
+      *ngFor="let column of columns$ | async"
+      [column]="column.id"
+      [cards]="column.cards"
+      (cardDrop)="onCardDrop($event)"
+      (toColumn)="toColumn($event)"></mp-column>
+
+  </div>
+
+</div>

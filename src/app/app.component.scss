@@ -1,0 +1,91 @@
+$appbar-height: 40px;
+$navbar-height: 50px;
+$list-width: 300px;
+$gap: 10px;
+$scrollbar-thickness: 17px;
+$list-header-height: 36px;
+$list-footer-height: 36px;
+$list-border-radius: 5px;
+$card-border-radius: 3px;
+$board-bg-color: #0079bf;
+$appbar-bg-color: #0067a3;
+$list-bg-color: #e2e4e6;
+
+body {
+  margin: 0;
+
+  font-family: 'Roboto';
+  font-size: 14px;
+  line-height: 1.3em;
+}
+
+.ui {
+  height: 100vh;
+
+  display: grid;
+  grid-template-rows: $appbar-height $navbar-height 1fr;
+
+  background-color: $board-bg-color;
+  color: #eee;
+}
+
+.navbar {
+  padding-left: $gap;
+  display: flex;
+  align-items: center;
+  &.app {
+    background-color: $appbar-bg-color;
+    font-size: 1.5rem;
+  }
+  &.board {
+    font-size: 1.1rem;
+  }
+}
+
+.lists {
+  display: flex;
+  overflow-x: auto;
+  > * {
+    flex: 0 0 auto;
+    margin-left: $gap;
+  }
+  &::after {
+    content: '';
+    flex: 0 0 $gap;
+  }
+}
+
+.add-column {
+  width: 280px;
+  height: 40px;
+  background-color: #0067A3;
+  border-radius: 3px;
+  width: 270px;
+  margin-left: 10px;
+  padding: 2px;
+  box-sizing: border-box;
+  display: inline-block;
+  vertical-align: top;
+  white-space: nowrap;
+  cursor: pointer;
+  cursor: hand;
+}
+
+.add-column span {
+  color: rgba(255,255,255,.7);
+  line-height: 40px;
+  vertical-align: middle;
+  padding: 7px;
+  font-size: 14px;
+  cursor: pointer;
+  cursor: hand;
+}
+
+.add-column input {
+  width: 100%;
+  height: 100%;
+  font-weight: 700;
+  border: none;
+  line-height: 18px;
+  padding: 3px 5px 4px 5px;
+}
