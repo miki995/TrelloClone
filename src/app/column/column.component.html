@@ -1,12 +1,15 @@
 <div class="list">
-  <header>List header</header>
-  <ul>
-    <mp-card
-      *ngFor="let card of cards"
-      [cardID]="card?.id"
-      [cardTitle]="card?.title"
-      [cardContent]="card?.content"
-      (dragEnd)="onCardDrop($event)"></mp-card>
-  </ul>
-  <footer>Add a column...</footer>
+    <header>{{columnName}}</header>
+    <ul>
+        <mp-card
+                *ngFor="let card of cards"
+                [cardID]="card?.id"
+                [cardTitle]="card?.title"
+                [cardContent]="card?.content"
+                (dragEnd)="onCardDrop($event)"></mp-card>
+        <input
+                (keyup)="addCardOnEnter($event)"
+                [(ngModel)]="addCardText">
+    </ul>
+    <footer>Add a card...</footer>
 </div>
