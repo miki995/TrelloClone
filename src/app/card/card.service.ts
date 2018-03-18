@@ -1,6 +1,6 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
-import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Injectable()
 export class CardService {
@@ -46,6 +46,10 @@ export class CardService {
 
     private columnSubject = new BehaviorSubject(this.columns);
 
+    private static generateId(): number {
+        return Math.floor(Math.random() * 10001);
+    }
+
     constructor() {
     }
 
@@ -55,43 +59,52 @@ export class CardService {
     }
 
     addCard(currentColumn, addCardText) {
-        const cardId = Math.floor(Math.random() * 10001);
+        const cardId = CardService.generateId();
         const newCard = {
             id: cardId,
             title: addCardText,
             column: currentColumn,
             content: 'newCard'
         };
-        this.columns[currentColumn].cards.push(newCard);
-        this.columnSubject.next(this.columns);
-        console.log(newCard);
-        console.log(this.columnSubject);
+        this.pushToCards(currentColumn, newCard);
+        this.updateColumnSubject();
     }
 
     addColumn(columnText) {
         const newColumn = {
-            id: Math.floor(Math.random() * 10001),
+            id: CardService.generateId(),
             name: columnText,
             cards: []
         };
         this.columns.push(newColumn);
-        this.columnSubject.next(this.columns);
+        this.updateColumnSubject();
     }
 
     moveCard(cardID, oldColumn) {
 
-        console.log(cardID, this.dropColumn);
-        const currentCard = this.columns[oldColumn].cards[cardID];
-        this.columns[oldColumn].cards = this.columns[oldColumn].cards.filter((item) => item.id !== cardID);
+        const columnIndex = this.columns.findIndex(item => item.id === oldColumn);
+        const cardIndex = this.columns[columnIndex].cards.findIndex(item => item.id === cardID);
 
-        this.columns[this.dropColumn].cards.push(currentCard);
 
-        this.columnSubject.next(this.columns);
+        const currentCard = this.columns[columnIndex].cards[cardIndex];
+        this.columns[columnIndex].cards = this.columns[columnIndex].cards.filter((item) => item.id !== cardID);
+
+        this.pushToCards(this.dropColumn, currentCard);
+        this.updateColumnSubject();
 
         delete this.dropColumn;
     }
 
     moveColumns(data) {
         this.dropColumn = data;
+    }
+
+    updateColumnSubject() {
+        this.columnSubject.next(this.columns);
+    }
+
+    pushToCards(column: any, newCard: any) {
+        const columnIndex = this.columns.findIndex(element => element.id === column);
+        this.columns[columnIndex].cards.push(newCard);
     }
 }

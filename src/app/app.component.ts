@@ -17,7 +17,6 @@ export class AppComponent {
     }
 
     onCardDrop(data) {
-        console.log(data);
         this.cardService.moveCard(data.cardID, data.column);
     }
 
