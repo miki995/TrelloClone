@@ -1,4 +1,5 @@
-<div class="card" draggable="true">
-  <p>{{cardTitle}}</p>
-  <a>{{cardContent}}</a>
+<div [ngClass]="{'draging': draging}" [style.position.top.px]="screenY" [style.position.left.px]="screenX" class="card"
+     draggable="true">
+    <p>{{cardTitle}}</p>
+    <a>{{cardContent}} {{cardPositionX}} {{cardPositionY}}</a>
 </div>

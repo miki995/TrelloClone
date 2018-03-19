@@ -16,8 +16,15 @@ export class AppComponent {
         this.columns$ = this.cardService.getColumns();
     }
 
+
+    onCardDrops(data) {
+        console.log(`Start position : ${data.screenX}, ${data.screenY}`);
+    }
+
     onCardDrop(data) {
         this.cardService.moveCard(data.cardID, data.column);
+        console.log(`End position : ${data.screenX}, ${data.screenY}`);
+        console.log(`Moved Card position : ${data.cardX}, ${data.cardY}`);
     }
 
     toColumn(columnID) {

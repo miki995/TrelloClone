@@ -27,11 +27,8 @@ $list-bg-color: #e2e4e6;
     border-top-right-radius: $list-border-radius;
   }
 
-  footer {
-    line-height: $list-footer-height;
-    border-bottom-left-radius: $list-border-radius;
-    border-bottom-right-radius: $list-border-radius;
-    color: #888;
+  .inputCard {
+  margin: 5px;
   }
 
   ul {

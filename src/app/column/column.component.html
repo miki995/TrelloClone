@@ -6,10 +6,12 @@
                 [cardID]="card?.id"
                 [cardTitle]="card?.title"
                 [cardContent]="card?.content"
-                (dragEnd)="onCardDrop($event)"></mp-card>
-        <input
-                (keyup)="addCardOnEnter($event)"
-                [(ngModel)]="addCardText">
+                [cardPositionX]="card?.positionX"
+                [cardPositionY]="card?.positionY"
+                (dragEnd)="onCardDrop($event)"
+                (dragStart)="onCardDrops($event)"></mp-card>
+        <input class="inputCard" placeholder="Add new card"
+               (keyup)="addCardOnEnter($event)"
+               [(ngModel)]="addCardText">
     </ul>
-    <footer>Add a card...</footer>
 </div>

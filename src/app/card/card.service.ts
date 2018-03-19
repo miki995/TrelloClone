@@ -5,6 +5,8 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 @Injectable()
 export class CardService {
     dropColumn: any;
+    firstCardPositionX = 27;
+    firstCardPositionY = 126;
 
     private columns = [
         {
@@ -13,12 +15,16 @@ export class CardService {
             cards: [
                 {
                     id: 0,
+                    positionX: this.firstCardPositionX,
+                    positionY: this.firstCardPositionY,
                     title: 'Card 1',
                     column: 0,
                     content: 'Card content 1'
                 },
                 {
                     id: 1,
+                    positionX: this.firstCardPositionX,
+                    positionY: this.firstCardPositionY + 90,
                     title: 'Card 1',
                     column: 0,
                     content: 'Card content 1'
@@ -36,6 +42,8 @@ export class CardService {
             cards: [
                 {
                     id: 13,
+                    positionX: this.firstCardPositionX + (2 * 300),
+                    positionY: this.firstCardPositionY,
                     title: 'Card 13',
                     column: 2,
                     content: 'Card content 13'
@@ -83,16 +91,19 @@ export class CardService {
     moveCard(cardID, oldColumn) {
 
         const columnIndex = this.columns.findIndex(item => item.id === oldColumn);
-        const cardIndex = this.columns[columnIndex].cards.findIndex(item => item.id === cardID);
+        const dropColumnIndex = this.columns.findIndex(item => item.id === this.dropColumn);
 
+        if (dropColumnIndex !== columnIndex) {
+            const cardIndex = this.columns[columnIndex].cards.findIndex(item => item.id === cardID);
 
-        const currentCard = this.columns[columnIndex].cards[cardIndex];
-        this.columns[columnIndex].cards = this.columns[columnIndex].cards.filter((item) => item.id !== cardID);
+            const currentCard = this.columns[columnIndex].cards[cardIndex];
 
-        this.pushToCards(this.dropColumn, currentCard);
-        this.updateColumnSubject();
+            this.columns[columnIndex].cards = this.columns[columnIndex].cards.filter((item) => item.id !== cardID);
+            this.pushToCards(this.dropColumn, currentCard);
+            this.updateColumnSubject();
 
-        delete this.dropColumn;
+            delete this.dropColumn;
+        }
     }
 
     moveColumns(data) {
@@ -105,6 +116,8 @@ export class CardService {
 
     pushToCards(column: any, newCard: any) {
         const columnIndex = this.columns.findIndex(element => element.id === column);
-        this.columns[columnIndex].cards.push(newCard);
+        if (columnIndex !== -1) {
+            this.columns[columnIndex].cards.push(newCard);
+        }
     }
 }

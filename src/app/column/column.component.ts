@@ -13,6 +13,7 @@ export class ColumnComponent implements OnInit {
     @Input() columnName: any;
 
     @Output() cardDrop = new EventEmitter();
+    @Output() cardDrops = new EventEmitter();
     @Output() toColumn = new EventEmitter();
     @Output() addCard = new EventEmitter();
 
@@ -39,9 +40,13 @@ export class ColumnComponent implements OnInit {
     drag(ev) {
     }
 
-    onCardDrop(cardID) {
+    onCardDrop(data) {
         this.cardDrop.next({
-            cardID,
+            cardID: data.cardID,
+            screenX: data.screenX,
+            screenY: data.screenY,
+            cardX: data.positionX,
+            cardY: data.positionY,
             column: this.column
         });
     }
@@ -57,5 +62,13 @@ export class ColumnComponent implements OnInit {
         } else if (event.keyCode === 27) {
             this.addCardText = '';
         }
+    }
+
+    onCardDrops(data: any) {
+        this.cardDrops.next({
+            screenX: data.screenX,
+            screenY: data.screenY,
+        });
+
     }
 }
